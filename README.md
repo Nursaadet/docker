@@ -6,37 +6,6 @@
 
 - Docker, kullanıcıların bir uygulamayı tüm bağımlılıklarıyla birlikte yazılım geliştirme için standart bir birime paketlemelerine olanak tanır.
 
-- Server Ne İşe Yarar?
-  İnternet kullanımının yaygınlaşmasıyla birlikte Server’lar oldukça önemli bir konuma gelmiştir. Çünkü Server’lar olmasaydı, Web de olmazdı. Server; veri tabanı bulundurur, bir ağı yönetir ve uygulama ya da dosya paylaşımının yapılmasını sağlar. Server’lar farklı şekillerde kullanılabildiği için kullanım amacına göre özel yazılımlar bulunmaktadır.
-
-- Server Çeşitleri Nelerdir?
-  Server çeşitlerini depolama yapılarına ve kullanım amaçlarına göre iki ana başlık altında sıralayabiliriz. Bu bağlamda Depolama Yapılarına göre Server türleri şu şekildedir;
-
-· Dedicated Server
-
-· Cloud Server
-
-· VPS/VDS Server
-
-- Kullanım Amaçlarına göre Server türleri ise şu şekildedir;
-
-· Medya Server
-
-· Web Server
-
-· Online Game Server
-
-· FTP Server
-
-· Proxy Server
-
-· DNS Server
-
-· E-Mail Server
-
-· File Server
-
-
 - Physical Servers (BareMetal Servers):
 
   - Bilgisayar -> Yüksek donanım, özel işlemciler, özel işletim sistemleri.
@@ -107,10 +76,10 @@
 
 ## Docker Commands
 
-```sh
+````sh
 
-    # Image build et:
-    $ docker build . # sadece bu komutu çalıştırdığınızda isimsiz oluştur
+        # Image build et:
+    $ docker build .
     # Image build et ve image'a isim ver:
     $ docker build . --tag <imagename>
     $ docker build . -t <imagename>
@@ -153,4 +122,89 @@
     # Interaktif moddan çık:
     $ exit
 
-```
+    $ docker login # Otomatik giriş (kullanıcı bilgilerini docker-desktop'tan alır)
+    $ docker login -u <kullanıcı_adı> # Manuel giriş
+    $ docker tag <image_name> <kullanıcı_adı>/<image_name>[:tag] # Depo ile bağlantı kur ve etiket ayarla
+    $ docker push <kullanıcı_adı>/<image_name>[:tag] # Yükle
+    $ docker pull <image_name> # Çek
+    $ docker search <image_name> # Ara
+
+# Pasif konteynerleri/görüntüleri/önbellekleri durdur ve sil.
+$ docker system prune -a -f # Gereksiz tüm konteynerleri, görüntüleri ve önbellekleri siler
+
+## .dockerignore
+
+```dockerignore
+
+*.pyc
+*.pyo
+*.mo
+*.db
+*.css.map
+*.egg-info
+*.sql.gz
+.cache
+.project
+.idea
+.pydevproject
+.idea/workspace.xml
+.DS_Store
+.git/
+.sass-cache
+.vagrant/
+__pycache__
+dist
+docs
+env/
+logs
+src/{{ project_name }}/settings/local.py
+src/node_modules
+web/media
+web/static/CACHE
+stats
+Dockerfile
+Footer
+node_modules/
+npm-debug.log
+
+# Docker Compose
+
+* https://docs.docker.com/compose/compose-file/
+
+/docker-compose.yml:
+
+```yml
+version: "3.9" # opsiyonel.
+
+services:
+
+    frontend:
+        # container_name: frontend # (default:key)
+        image: "docker-compose-frontend" # image_name
+        build: ./frontend # Dockerize edilecek klasör (dockerfile)
+        ports:
+            # dış/iç port numaraları
+            - 5173:5173
+            - 3000:5173
+            - 80:5173
+        restart: on-failure # hata anında tekrar çalıştır.
+        depends_on:
+            # önce aşağıdakileri çalıştır.
+            - backend # aşağıda tanımlandı.
+
+    backend:
+        # container_name: backend # (default:key)
+        image: "docker-compose-backend" # image_name
+        build: ./backend # Dockerize edilecek klasör (dockerfile)
+        ports:
+            # dış/iç port numaraları
+            - 8000:8000
+        restart: on-failure # hata anında tekrar çalıştır.
+
+    # $ docker compose up # compose çalıştır.
+    # $ docker compose up -d --build # compose daemon aç ve tekrar build et.
+    # $ docker compose down # compose kapat.
+     # $ docker compose down -v # compose tümünü kapat.
+
+
+````
