@@ -9,7 +9,7 @@
     "debug": "DEBUG=* node index.js"
   },
   "keywords": [],
-  "author": "Clarusway",
+  "author": "Saadet",
   "license": "ISC Licence",
   "dependencies": {
     "cors": "^2.8.5",
