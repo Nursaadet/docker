@@ -10,7 +10,7 @@ services:
     depends_on:
       - backend
   backend:
-    images: "docker-compose-backend"
+    image: "docker-compose-backend"
     build: ./backend
     ports:
       - "8000:8000"
