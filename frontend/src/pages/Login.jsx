@@ -59,7 +59,7 @@ const Login = () => {
           >
             <LockIcon size="30" />
           </Avatar>
-          <Typography
+          <Typography data-test="loginHeader"
             variant="h4"
             align="center"
             mb={4}
@@ -80,7 +80,7 @@ const Login = () => {
             {({ handleChange, handleBlur, values, touched, errors }) => (
               <Form>
                 <Box sx={{ display: "flex", flexDirection: "column", gap: 2 }}>
-                  <TextField
+                  <TextField data-test="loginEmail"
                     label="Email"
                     name="email"
                     id="email"
@@ -92,7 +92,7 @@ const Login = () => {
                     error={touched.email && Boolean(errors.email)}
                     helperText={errors.email}
                   />
-                  <TextField
+                  <TextField data-test="loginPassword"
                     label="password"
                     name="password"
                     id="password"
@@ -104,7 +104,7 @@ const Login = () => {
                     error={touched.password && Boolean(errors.password)}
                     helperText={errors.password}
                   />
-                  <Button variant="contained" type="submit">
+                  <Button data-test="loginSubmit" variant="contained" type="submit">
                     Submit
                   </Button>
                 </Box>

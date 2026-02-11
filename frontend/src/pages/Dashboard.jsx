@@ -61,7 +61,7 @@ function Dashboard(props) {
             Stock App
           </Typography>
 
-          <Button variant="contained" onClick={() => logout()}>
+          <Button data-test="logoutButton"  variant="contained" onClick={() => logout()}>
             Logout
           </Button>
         </Toolbar>

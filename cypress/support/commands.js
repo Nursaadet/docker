@@ -23,3 +23,17 @@
 //
 // -- This will overwrite an existing command --
 // Cypress.Commands.overwrite('visit', (originalFn, url, options) => { ... })
+
+Cypress.Commands.add('login', (email, password) => {
+    cy.url().should("include", "/");
+    cy.get('[data-test="loginHeader"]').should("be.visible").contains("Login");
+    cy.get('[data-test="loginEmail"]').should("be.visible").type("admin@site.com")
+    cy.get('[data-test="loginPassword"]').should("be.visible").type("aA?123456")
+    cy.get('[data-test="loginSubmit"]').should("be.visible").click({force: true})
+    cy.url().should("include", "/stock");
+  });
+
+Cypress.Commands.add("goToMenu", (menuName, expectedUrl) => {
+  cy.get(`[data-test="menu-${menuName}"]`).click()
+  cy.url().should("include", expectedUrl)
+})

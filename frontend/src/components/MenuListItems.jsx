@@ -73,7 +73,7 @@ const MenuListItems = () => {
               "&:hover .MuiSvgIcon-root": { color: "red" },
             }}
           >
-            <ListItemButton>
+            <ListItemButton data-test={`menuListItem-${item.title.toLowerCase()}`}>
               <ListItemIcon>{item.icon}</ListItemIcon>
               <ListItemText primary={item.title} />
             </ListItemButton>
