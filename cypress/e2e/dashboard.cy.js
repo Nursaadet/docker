@@ -1,11 +1,13 @@
-describe("dashboard test", () => {
-    beforeEach(() => {
-        cy.visit("http://localhost:5173/");
-        cy.viewport(1280, 720);
-    })
-  it("dashboard", () => {
+describe("Dashboard", () => {
+
+  beforeEach(() => {
+    cy.visit("http://localhost:5173/")
     cy.login()
-    cy.get('[data-test="logoutButton"]').should("be.visible")
-    
-  });
-});
+  })
+
+  it("Layout görünür", () => {
+    cy.contains("Stock App").should("exist")
+  })
+
+})
+

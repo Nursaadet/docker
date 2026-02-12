@@ -1,43 +1,44 @@
-import * as React from "react"
-import Box from "@mui/material/Box"
-import Button from "@mui/material/Button"
-import Modal from "@mui/material/Modal"
-import { modalStyle } from "../styles/globalStyles"
-import TextField from "@mui/material/TextField"
-import useStockCall from "../hooks/useStockCall"
-import InputLabel from "@mui/material/InputLabel"
-import MenuItem from "@mui/material/MenuItem"
-import FormControl from "@mui/material/FormControl"
-import Select from "@mui/material/Select"
-import { useSelector } from "react-redux"
+import * as React from "react";
+import Box from "@mui/material/Box";
+import Button from "@mui/material/Button";
+import Modal from "@mui/material/Modal";
+import { modalStyle } from "../styles/globalStyles";
+import TextField from "@mui/material/TextField";
+import useStockCall from "../hooks/useStockCall";
+import InputLabel from "@mui/material/InputLabel";
+import MenuItem from "@mui/material/MenuItem";
+import FormControl from "@mui/material/FormControl";
+import Select from "@mui/material/Select";
+import { useSelector } from "react-redux";
 
 export default function SaleModal({ open, handleClose, info, setInfo }) {
-  const { postStockData, putStockData } = useStockCall()
-  const { products, brands } = useSelector((state) => state.stock)
+  const { postStockData, putStockData } = useStockCall();
+  const { products, brands } = useSelector((state) => state.stock);
 
   const handleChange = (e) => {
-    const { name, value } = e.target
+    const { name, value } = e.target;
     // setInfo({ ...info, [name]: Number(value) })
-    setInfo({ ...info, [name]: (value) })
-  }
+    setInfo({ ...info, [name]: value });
+  };
 
   const handleSubmit = (e) => {
-    e.preventDefault()
+    e.preventDefault();
 
     if (info.id) {
-      putStockData("sales", info)
+      putStockData("sales", info);
     } else {
-      postStockData("sales", info)
+      postStockData("sales", info);
     }
 
-    handleClose()
-  }
+    handleClose();
+  };
   return (
     <div>
       <Modal
+        data-cy="sale-modal"
         open={open}
         onClose={() => {
-          handleClose()
+          handleClose();
         }}
         aria-labelledby="modal-modal-title"
         aria-describedby="modal-modal-description"
@@ -53,6 +54,7 @@ export default function SaleModal({ open, handleClose, info, setInfo }) {
                 Brand
               </InputLabel>
               <Select
+                data-cy="brand-select"
                 labelId="brand-select-label"
                 label="Brand"
                 id="brand-select"
@@ -70,7 +72,7 @@ export default function SaleModal({ open, handleClose, info, setInfo }) {
                     <MenuItem key={item.id} value={item.id}>
                       {item.name}
                     </MenuItem>
-                  )
+                  );
                 })}
               </Select>
             </FormControl>
@@ -79,6 +81,7 @@ export default function SaleModal({ open, handleClose, info, setInfo }) {
                 Product
               </InputLabel>
               <Select
+                data-cy="product-select"
                 labelId="product-select-label"
                 label="Product"
                 id="product-select"
@@ -96,7 +99,7 @@ export default function SaleModal({ open, handleClose, info, setInfo }) {
                     <MenuItem key={item.id} value={item.id}>
                       {item.name}
                     </MenuItem>
-                  )
+                  );
                 })}
               </Select>
             </FormControl>
@@ -106,7 +109,9 @@ export default function SaleModal({ open, handleClose, info, setInfo }) {
               name="quantity"
               type="number"
               variant="outlined"
-              InputProps={{ inputProps: { min: 0 } }}
+              InputProps={{
+                inputProps: { min: 0, "data-cy": "quantity-input" },
+              }}
               value={info?.quantity || ""}
               onChange={handleChange}
               required
@@ -117,17 +122,18 @@ export default function SaleModal({ open, handleClose, info, setInfo }) {
               type="number"
               variant="outlined"
               name="price"
-              InputProps={{ inputProps: { min: 0 } }}
+              InputProps={{ inputProps: { min: 0, "data-cy": "price-input" } }}
               value={info?.price || ""}
               onChange={handleChange}
               required
             />
-            <Button type="submit" variant="contained" size="large">
+            <Button data-cy="sale-submit-btn"
+            type="submit" variant="contained" size="large">
               {info?.id ? "Update Sale" : "Add New Sale"}
             </Button>
           </Box>
         </Box>
       </Modal>
     </div>
-  )
+  );
 }

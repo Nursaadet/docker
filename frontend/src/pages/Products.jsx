@@ -28,7 +28,9 @@ const Products = () => {
       <Typography variant="h4" color={"error"} mb={3}>
         Products
       </Typography>
-      <Button variant="contained" onClick={handleOpen}>
+      <Button
+      data-cy="new-product-btn"
+        variant="contained" onClick={handleOpen}>
         NEW PRODUCT
       </Button>
 

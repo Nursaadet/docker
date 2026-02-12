@@ -34,7 +34,8 @@ const Purchases = () => {
         Purchases
       </Typography>
 
-      <Button variant="contained" onClick={handleOpen}>
+      <Button 
+     data-cy="new-purchase-btn" variant="contained" onClick={handleOpen}>
         New Purchase
       </Button>
 

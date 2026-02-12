@@ -1,46 +1,47 @@
-import React from "react"
-import Box from "@mui/material/Box"
-import Modal from "@mui/material/Modal"
+import React from "react";
+import Box from "@mui/material/Box";
+import Modal from "@mui/material/Modal";
 
-import TextField from "@mui/material/TextField"
-import { Button } from "@mui/material"
-import useStockCall from "../hooks/useStockCall"
-import { MenuItem, Select, InputLabel, FormControl } from "@mui/material"
-import { useSelector } from "react-redux"
-import { useNavigate } from "react-router-dom"
-import { modalStyle } from "../styles/globalStyles"
+import TextField from "@mui/material/TextField";
+import { Button } from "@mui/material";
+import useStockCall from "../hooks/useStockCall";
+import { MenuItem, Select, InputLabel, FormControl } from "@mui/material";
+import { useSelector } from "react-redux";
+import { useNavigate } from "react-router-dom";
+import { modalStyle } from "../styles/globalStyles";
 
 export default function PurchaseModal({ open, handleClose, info, setInfo }) {
-  const navigate = useNavigate()
-  const { postStockData, putStockData } = useStockCall()
-  const { firms, products, brands } = useSelector((state) => state.stock)
+  const navigate = useNavigate();
+  const { postStockData, putStockData } = useStockCall();
+  const { firms, products, brands } = useSelector((state) => state.stock);
 
   const handleChange = (e) => {
-    const { name, value } = e.target
+    const { name, value } = e.target;
     // setInfo({ ...info, [name]: Number(value) })
-    setInfo({ ...info, [name]: (value) })
-  }
+    setInfo({ ...info, [name]: value });
+  };
 
   const handleSubmit = (e) => {
-    e.preventDefault()
+    e.preventDefault();
 
     if (info.id) {
-      putStockData("purchases", info)
+      putStockData("purchases", info);
     } else {
-      postStockData("purchases", info)
+      postStockData("purchases", info);
     }
 
-    handleClose()
-    setInfo({})
-  }
+    handleClose();
+    setInfo({});
+  };
 
   return (
     <div>
       <Modal
+        data-cy="purchase-modal"
         open={open}
         onClose={() => {
-          handleClose()
-          setInfo({})
+          handleClose();
+          setInfo({});
         }}
         aria-labelledby="modal-modal-title"
         aria-describedby="modal-modal-description"
@@ -56,6 +57,7 @@ export default function PurchaseModal({ open, handleClose, info, setInfo }) {
                 Firm
               </InputLabel>
               <Select
+                data-cy="firm-select"
                 labelId="firm-select-label"
                 label="Firm"
                 name="firm_id"
@@ -72,7 +74,7 @@ export default function PurchaseModal({ open, handleClose, info, setInfo }) {
                     <MenuItem key={item.id} value={item.id}>
                       {item.name}
                     </MenuItem>
-                  )
+                  );
                 })}
               </Select>
             </FormControl>
@@ -81,6 +83,7 @@ export default function PurchaseModal({ open, handleClose, info, setInfo }) {
                 Brand
               </InputLabel>
               <Select
+                data-cy="brand-select"
                 labelId="brand-select-label"
                 label="Brand"
                 id="brand-select"
@@ -98,7 +101,7 @@ export default function PurchaseModal({ open, handleClose, info, setInfo }) {
                     <MenuItem key={item.id} value={item.id}>
                       {item.name}
                     </MenuItem>
-                  )
+                  );
                 })}
               </Select>
             </FormControl>
@@ -107,6 +110,7 @@ export default function PurchaseModal({ open, handleClose, info, setInfo }) {
                 Product
               </InputLabel>
               <Select
+                data-cy="product-select"
                 labelId="product-select-label"
                 label="Product"
                 id="product-select"
@@ -124,7 +128,7 @@ export default function PurchaseModal({ open, handleClose, info, setInfo }) {
                     <MenuItem key={item.id} value={item.id}>
                       {item.name}
                     </MenuItem>
-                  )
+                  );
                 })}
               </Select>
             </FormControl>
@@ -134,28 +138,45 @@ export default function PurchaseModal({ open, handleClose, info, setInfo }) {
               name="quantity"
               type="number"
               variant="outlined"
-              InputProps={{ inputProps: { min: 0 } }}
+              InputProps={{
+                inputProps: {
+                  min: 0,
+                  "data-cy": "quantity-input",
+                },
+              }}
               value={info?.quantity || ""}
               onChange={handleChange}
               required
             />
+
             <TextField
               label="Price"
               id="price"
               type="number"
               variant="outlined"
               name="price"
-              InputProps={{ inputProps: { min: 0 } }}
+              InputProps={{
+                inputProps: {
+                  min: 0,
+                  "data-cy": "price-input",
+                },
+              }}
               value={info?.price || ""}
               onChange={handleChange}
               required
             />
-            <Button type="submit" variant="contained" size="large">
+
+            <Button
+              data-cy="purchase-submit-btn"
+              type="submit"
+              variant="contained"
+              size="large"
+            >
               {info?.id ? "Update Purchase" : "Add New Purchase"}
             </Button>
           </Box>
         </Box>
       </Modal>
     </div>
-  )
+  );
 }

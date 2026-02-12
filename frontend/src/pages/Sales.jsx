@@ -33,6 +33,7 @@ const Sales = () => {
         Sales
       </Typography>
       <Button
+      data-cy="new-sale-btn"
         variant="contained"
         sx={{ marginBottom: "1rem" }}
         onClick={() => setOpen(true)}

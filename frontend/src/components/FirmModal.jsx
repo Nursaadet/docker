@@ -1,14 +1,14 @@
-import { useState } from "react"
-import Box from "@mui/material/Box"
-import Button from "@mui/material/Button"
-import Typography from "@mui/material/Typography"
-import TextField from "@mui/material/TextField"
-import Modal from "@mui/material/Modal"
-import { modalStyle } from "../styles/globalStyles"
-import useStockCall from "../hooks/useStockCall"
+import { useState } from "react";
+import Box from "@mui/material/Box";
+import Button from "@mui/material/Button";
+import Typography from "@mui/material/Typography";
+import TextField from "@mui/material/TextField";
+import Modal from "@mui/material/Modal";
+import { modalStyle } from "../styles/globalStyles";
+import useStockCall from "../hooks/useStockCall";
 
 export default function FirmModal({ open, handleClose, info, setInfo }) {
-  const { postStockData, putStockData } = useStockCall()
+  const { postStockData, putStockData } = useStockCall();
   //   const [info, setInfo] = useState({
   //     name: "",
   //     phone: "",
@@ -18,23 +18,24 @@ export default function FirmModal({ open, handleClose, info, setInfo }) {
 
   const handleChange = (e) => {
     // const { name, value } = e.target
-    setInfo({ ...info, [e.target.name]: e.target.value })
-  }
+    setInfo({ ...info, [e.target.name]: e.target.value });
+  };
 
   const handleSubmit = (e) => {
-    e.preventDefault()
-    console.log(info.id)
+    e.preventDefault();
+    console.log(info.id);
     if (info.id) {
-      putStockData("firms", info)
+      putStockData("firms", info);
     } else {
-      postStockData("firms", info)
+      postStockData("firms", info);
     }
 
-    handleClose()
-  }
+    handleClose();
+  };
   return (
     <div>
       <Modal
+        data-cy="firm-modal"
         open={open}
         onClose={handleClose}
         aria-labelledby="modal-modal-title"
@@ -47,6 +48,7 @@ export default function FirmModal({ open, handleClose, info, setInfo }) {
             onSubmit={handleSubmit}
           >
             <TextField
+              inputProps={{ "data-cy": "firm-name-input" }}
               label="Firm Name"
               name="name"
               id="name"
@@ -58,6 +60,7 @@ export default function FirmModal({ open, handleClose, info, setInfo }) {
             />
 
             <TextField
+              inputProps={{ "data-cy": "firm-phone-input" }}
               label="Phone"
               name="phone"
               id="phone"
@@ -68,6 +71,7 @@ export default function FirmModal({ open, handleClose, info, setInfo }) {
               onChange={handleChange}
             />
             <TextField
+              inputProps={{ "data-cy": "firm-address-input" }}
               label="Address"
               name="address"
               id="address"
@@ -79,6 +83,7 @@ export default function FirmModal({ open, handleClose, info, setInfo }) {
             />
 
             <TextField
+              inputProps={{ "data-cy": "firm-image-input" }}
               label="Image"
               name="image"
               id="image"
@@ -89,12 +94,13 @@ export default function FirmModal({ open, handleClose, info, setInfo }) {
               onChange={handleChange}
             />
 
-            <Button variant="contained" type="submit">
+            <Button
+            data-cy="firm-submit-btn" variant="contained" type="submit">
               Submit
             </Button>
           </Box>
         </Box>
       </Modal>
     </div>
-  )
+  );
 }

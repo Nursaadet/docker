@@ -23,6 +23,7 @@ const Brands = () => {
       </Typography>
 
       <Button
+        data-cy="new-brand-btn"
         variant="contained"
         onClick={() => {
           setInfo({})

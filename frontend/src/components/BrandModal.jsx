@@ -1,36 +1,37 @@
-import React from "react"
-import { flexColumn, modalStyle } from "../styles/globalStyles"
-import Box from "@mui/material/Box"
-import Button from "@mui/material/Button"
-import Modal from "@mui/material/Modal"
-import TextField from "@mui/material/TextField"
-import useStockCall from "../hooks/useStockCall"
+import React from "react";
+import { flexColumn, modalStyle } from "../styles/globalStyles";
+import Box from "@mui/material/Box";
+import Button from "@mui/material/Button";
+import Modal from "@mui/material/Modal";
+import TextField from "@mui/material/TextField";
+import useStockCall from "../hooks/useStockCall";
 
 export default function BrandModal({ open, setOpen, info, setInfo }) {
-  const { postStockData, putStockData } = useStockCall()
+  const { postStockData, putStockData } = useStockCall();
 
   const handleChange = (e) => {
-    e.preventDefault()
-    const { name, value } = e.target
-    setInfo({ ...info, [name]: value })
-  }
+    e.preventDefault();
+    const { name, value } = e.target;
+    setInfo({ ...info, [name]: value });
+  };
   const handleSubmit = (e) => {
-    e.preventDefault()
-    setOpen(false)
+    e.preventDefault();
+    setOpen(false);
     if (info.id) {
-      putStockData("brands", info)
+      putStockData("brands", info);
     } else {
-      postStockData("brands", info)
+      postStockData("brands", info);
     }
-    setInfo({})
-  }
+    setInfo({});
+  };
 
   return (
     <Modal
+      data-cy="brand-modal"
       open={open}
       onClose={() => {
-        setOpen(false)
-        setInfo({})
+        setOpen(false);
+        setInfo({});
       }}
       aria-labelledby="modal-modal-title"
       aria-describedby="modal-modal-description"
@@ -41,6 +42,7 @@ export default function BrandModal({ open, setOpen, info, setInfo }) {
             label="Brand Name"
             name="name"
             id="name"
+            inputProps={{ "data-cy": "brand-name-input" }}
             type="text"
             variant="outlined"
             value={info?.name || ""}
@@ -52,17 +54,20 @@ export default function BrandModal({ open, setOpen, info, setInfo }) {
             label="Image Url"
             name="image"
             id="image"
+            inputProps={{ "data-cy": "brand-image-input" }}
             type="url"
             variant="outlined"
             value={info?.image || ""}
             onChange={handleChange}
           />
 
-          <Button type="submit" variant="contained" size="large">
+          <Button 
+          data-cy="save-brand-btn"
+          type="submit" variant="contained" size="large">
             Save Brand
           </Button>
         </Box>
       </Box>
     </Modal>
-  )
+  );
 }

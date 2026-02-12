@@ -31,6 +31,7 @@ export default function ProductModal({ open, handleClose }) {
   return (
     <div>
       <Modal
+        data-cy="product-modal"
         open={open}
         onClose={() => {
           setInfo({ name: "", category_id: "", brand_id: "" })
@@ -48,6 +49,7 @@ export default function ProductModal({ open, handleClose }) {
             <FormControl fullWidth>
               <InputLabel id="category">Categories</InputLabel>
               <Select
+                  data-cy="category-select"
                 labelId="category"
                 id="category"
                 name="category_id"
@@ -66,6 +68,7 @@ export default function ProductModal({ open, handleClose }) {
             <FormControl fullWidth>
               <InputLabel id="brand">Brands</InputLabel>
               <Select
+              data-cy="brand-select"
                 labelId="brand"
                 id="brand"
                 name="brand_id"
@@ -81,6 +84,7 @@ export default function ProductModal({ open, handleClose }) {
               </Select>
             </FormControl>
             <TextField
+            inputProps={{ "data-cy": "product-name-input" }} 
               label="Product Name"
               name="name"
               id="name"
@@ -91,7 +95,9 @@ export default function ProductModal({ open, handleClose }) {
               onChange={handleChange}
             />
 
-            <Button variant="contained" type="submit">
+            <Button 
+            data-cy="product-submit-btn" 
+            variant="contained" type="submit">
               Submit
             </Button>
           </Box>
